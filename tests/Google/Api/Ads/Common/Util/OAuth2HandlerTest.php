@@ -20,8 +20,6 @@
  * @copyright  2012, Google Inc. All Rights Reserved.
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
- * @author     Eric Koleda
- * @author     Vincent Tsao
  */
 error_reporting(E_STRICT | E_ALL);
 
@@ -34,13 +32,37 @@ require_once 'Google/Api/Ads/Common/Util/OAuth2Handler.php';
 class OAuth2HandlerTest extends PHPUnit_Framework_TestCase {
 
   private $oauth2Handler;
-  private $scope;
+  private $scopes;
 
   public function setup() {
     date_default_timezone_set('America/New_York');
-    $this->scope = 'TEST_SCOPE';
+    $this->scopes = array('TEST_SCOPE');
 
-    $this->oauth2Handler = new TestOAuth2Handler(NULL, $this->scope);
+    $this->oauth2Handler = new TestOAuth2Handler(null, $this->scopes);
+  }
+
+  public function testMultipleScopes() {
+    $scopes = array('TEST_SCOPE1', 'TEST_SCOPE2', 'TEST_SCOPE3');
+    $this->oauth2Handler = new TestOAuth2Handler(null, $scopes);
+
+    $credentials = array('client_id' => 'TEST_CLIENT_ID');
+
+    $url = $this->oauth2Handler->GetAuthorizationUrl($credentials);
+    $urlParts = parse_url($url);
+    $params = array();
+    parse_str($urlParts['query'], $params);
+    $this->assertEquals('TEST_SCOPE1 TEST_SCOPE2 TEST_SCOPE3',
+        $params['scope']);
+
+    $this->oauth2Handler->SetScopes(array('TEST_SCOPE4', 'TEST_SCOPE5',
+        'TEST_SCOPE6'));
+
+    $url = $this->oauth2Handler->GetAuthorizationUrl($credentials);
+    $urlParts = parse_url($url);
+    $params = array();
+    parse_str($urlParts['query'], $params);
+    $this->assertEquals('TEST_SCOPE4 TEST_SCOPE5 TEST_SCOPE6',
+        $params['scope']);
   }
 
   public function testGetAuthorizationUrl() {
@@ -70,9 +92,9 @@ class OAuth2HandlerTest extends PHPUnit_Framework_TestCase {
   public function testGetAuthorizationUrl_AlternateServer() {
     $scheme = 'http';
     $authServer = 'www.foo.com';
-    $scope = 'TEST_SCOPE';
+    $scopes = array('TEST_SCOPE');
     $this->oauth2Handler = new TestOAuth2Handler(
-        sprintf('%s://%s', $scheme, $authServer), $scope);
+        sprintf('%s://%s', $scheme, $authServer), $scopes);
     $credentials = array('client_id' => 'TEST_CLIENT_ID');
 
 
@@ -107,8 +129,8 @@ class OAuth2HandlerTest extends PHPUnit_Framework_TestCase {
   public function testGetAuthorizationUrl_Offline() {
     $credentials = array('client_id' => 'TEST_CLIENT_ID');
 
-    $url = $this->oauth2Handler->GetAuthorizationUrl($credentials, NULL,
-        TRUE);
+    $url = $this->oauth2Handler->GetAuthorizationUrl($credentials, null,
+        true);
 
     $urlParts = parse_url($url);
     $params = array();
@@ -120,7 +142,7 @@ class OAuth2HandlerTest extends PHPUnit_Framework_TestCase {
     $credentials = array('client_id' => 'TEST_CLIENT_ID');
     $params = array('foo' => 'bar');
 
-    $url = $this->oauth2Handler->GetAuthorizationUrl($credentials, NULL, NULL,
+    $url = $this->oauth2Handler->GetAuthorizationUrl($credentials, null, null,
         $params);
 
     $urlParts = parse_url($url);
@@ -354,7 +376,7 @@ class TestOAuth2Handler extends OAuth2Handler {
   const REFRESH_TOKEN_MESSAGE = 'Refresh not implemented.';
 
   public function GetAccessToken(array $credentials, $code,
-      $redirectUri = NULL) {
+      $redirectUri = null) {
     throw new Exception(self::GET_TOKEN_MESSAGE);
   }
 

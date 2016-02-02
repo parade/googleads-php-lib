@@ -20,8 +20,6 @@
  * @copyright  2012, Google Inc. All Rights Reserved.
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
- * @author     Eric Koleda
- * @author     Vincent Tsao
  */
 error_reporting(E_STRICT | E_ALL);
 
@@ -204,7 +202,7 @@ class TestSimpleOAuth2Handler extends SimpleOAuth2Handler {
   public $lastParams;
   public $response;
 
-  public function __construct($server = NULL) {
+  public function __construct($server = null) {
     parent::__construct($server);
     $this->response = array();
   }

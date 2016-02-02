@@ -1,3 +1,173 @@
+### 7.0.0
+
+AdWords:
+  - Versioned ReportUtils.
+  - Added XmlSerializer and XmlDeserializer.
+  - Added BatchJobUtils for uploading batch operations and downloading the
+    results from batch processing.
+  - Added an example of adding campaigns using BatchJobService.
+
+Common:
+  - Fixed [issue #100](https://github.com/googleads/googleads-php-lib/issues/100).
+
+### 6.6.0
+
+DFP:
+  - Added support for v201511.
+  - Removed support for v201408 (deprecated) and examples for v201411 (deprecated). See the [deprecation schedule](https://developers.google.com/doubleclick-publishers/docs/deprecation) for more information.
+
+### 6.5.0
+
+AdWords:
+  - Added support for additional OAuth2 scopes.
+  - Removed support and examples for v201502.
+    See the [deprecation schedule](https://developers.google.com/adwords/api/docs/sunset-dates) for more information.
+
+DFP:
+  - Added support for additional OAuth2 scopes.
+
+### 6.4.0
+
+AdWords:
+  - Added support and examples for v201509.
+
+Common:
+  - Fixed [issue #96](https://github.com/googleads/googleads-php-lib/issues/96).
+
+### 6.3.0
+
+DFP:
+  - Added support for v201508.
+  - Added ReconciliationLineItemReportService.
+  - Removed support for v201403 (sunset) and v201405 (deprecated). See the [deprecation schedule](https://developers.google.com/doubleclick-publishers/docs/deprecation) for more information.
+  - Removed examples for v201408.
+
+Common:
+  - Removed packaging WSDLInterpreter with the library for security reasons.
+
+### 6.2.0
+
+AdWords:
+  - Fixed [issue #81](https://github.com/googleads/googleads-php-lib/issues/81).
+  - Removed support and examples for v201409.
+    See the [deprecation schedule](https://developers.google.com/adwords/api/docs/sunset-dates) for more information.
+
+### 6.1.0
+
+AdWords:
+  - Added support and examples for v201506.
+  - Added support for the new includeZeroImpressions HTTP header for reporting.
+
+Common:
+  - Removed all logic handling support for PHP 5.2 as this library [no longer supports PHP 5.2](http://googleadsdeveloper.blogspot.com/2014/07/deprecating-php-52-support-for-ads-php.html).
+
+### 6.0.0
+
+AdWords:
+  - Removed the applicationToken parameter from the AdWordsUser.php constructor, as applicationToken is no longer required and ignored. Please see the [CreateAdWordsUserWithoutIniFile.php](https://github.com/googleads/googleads-php-lib/blob/master/examples/AdWords/Auth/CreateAdWordsUserWithoutIniFile.php) auth example for updated usage.
+
+DFP:
+  - Added support for v201505.
+  - Refactored utility classes so they are now version specific.
+  - Removed ServiceUtils.php from all versions. Please see the [migration guide](https://github.com/googleads/googleads-php-lib/wiki/Migrating-off-of-DFP-ServiceUtils-functions) for more information.
+  - Removed ReportUtils.php from v201505 as it is deprecated. Please use ReportDownloader.php instead.
+  - Updated v201505 examples that deal with date time to ensure timezones are passed in anywhere date times are used.
+  - Removed deprecated functions from DateTimeUtils.php.
+
+### 5.9.0
+
+AdWords:
+  - Removed support and examples for v201406.
+  - Added support for the [skipColumnHeader option](https://developers.google.com/adwords/api/docs/guides/reporting#optional-headers)
+    introduced in v201502.
+  - Updated MigrateToExtensionSettings.php to account for platform restrictions.
+  - Reworked AddSitelinks examples to use final URLs and function strings.
+
+### 5.8.2
+
+AdWords:
+  - Added v201502 support.
+
+### 5.8.1
+
+DFP:
+  - Removed ClientLogin related parameters from the DfpUser constructor. See the Auth/CreateDfpUserWithoutIniFile.php example for updated usage.
+
+### 5.8.0
+
+AdWords:
+  - Improved targetAll comments in the AddAdGroups.php examples.
+  - Added code examples for upgraded URLs.
+
+DFP:
+  - Added support for v201502.
+  - Removed support for v201311, v201308, and v201306.
+  - Removed examples for v201403.
+  - Updated ForecastService examples.
+  - Removed support for ClientLogin with the removal of v201311 and earlier.
+
+### 5.7.1
+
+AdWords:
+  - Refactored Google Places examples to use Google My Business (GMB) instead.
+
+Common:
+  - Fixed [issue #74](https://github.com/googleads/googleads-php-lib/issues/74).
+
+### 5.7.0
+
+AdWords:
+  - Fixed [issue #58](https://github.com/googleads/googleads-php-lib/issues/58).
+  - Removed support for v201402 as it is now sunset.
+
+DFP:
+  - Fixed [issue #1](https://github.com/googleads/googleads-php-lib/issues/1).
+
+### 5.6.0
+
+DFP:
+  - Removed examples for v201311 since it is deprecated. See the [deprecation schedule](https://developers.google.com/doubleclick-publishers/docs/deprecation) for more information.
+  - Added support for v201411.
+  - Added examples for [Sales Manager services](https://developers.google.com/doubleclick-publishers/docs/sales/index).
+
+### 5.5.2
+
+AdWords:
+  - Added v201409 support.
+
+### 5.5.1
+
+AdWords:
+  - Removed ClientLogin support.
+  - Added example for using ad customizers.
+
+### 5.5.0
+
+DFP:
+  - Added support for v201408.
+  - Updated API server endpoint base to default to https://ads.google.com in the settings.ini file.
+  - Updated OAuth 2.0 scope. See [documentation](https://developers.google.com/doubleclick-publishers/docs/authentication#scope).
+  - Fixed [issue #61](https://github.com/googleads/googleads-php-lib/issues/61).
+  - Updated v201405 line item service examples to use statement builder to
+    construct PQL queries.
+  - Removed some obsolete line item examples from v201405 and v201408 examples.
+  - Removed the suffix "Example" on all v201408 examples' filenames.
+  - Removed examples for versions that are currently soft deprecated (<= v201308). See the [deprecation schedule](https://developers.google.com/doubleclick-publishers/docs/deprecation) for more information.
+  - Fixed RunInventoryReport examples in v201405 and v201408 to use PARENT_AD_UNIT_ID instead of AD_UNIT_ANCESTOR_AD_UNIT_ID as it was renamed in v201405.
+  - Updated create line item and get forecast examples in v201408 to show how to set Goal.goalType.
+  - Refactored v201408 report examples to now download and save the report once it has finished running.
+  - Added new utility ReportDownloader.php to replace ReportUtils.php that works better with allowing report examples to download and save the report once it has finished running.
+  - Deprecated ReportUtils.php.
+  - Added PQL SetValue support to Pql.php util.
+
+### 5.4.0
+
+AdWords:
+  - Removed v201309 support.
+
+Common:
+  - Added AdWords/Lib and Dfp/Lib to composer's autoload classmap. Fixed [pull request #44](https://github.com/googleads/googleads-php-lib/pull/44).
+
 ### 5.3.1
 
 AdWords:
